@@ -1,16 +1,25 @@
-### Hi there 👋
+pip install pandas openpyxl schedule
+import pandas as pandas
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import schedule
+import time
+from datetime import datetime, timedelta
 
-<!--
-**Oluwaboriogunj/oluwaboriogunj** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+# Function to send email
+def send_email(to_email, subject, body):
+    from_email = 'hubersocial171@gmail.com'  
+    password = 'intern2024'  
 
-Here are some ideas to get you started:
+    msg = MIMEMultipart()
+    msg['From'] = from_email
+    msg['To'] = to_email
+    msg['Subject'] = subject
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+    msg.attach(MIMEText(body, 'plain'))
+
+    with smtplib.SMTP('smtp.gmail.com', 587) as server:
+        server.starttls()
+        server.login(from_email, password)
+        server.sendmail(from_email, to_email, msg.as_string())
